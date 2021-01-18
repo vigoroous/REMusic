@@ -100,8 +100,10 @@ public OnRoundEnd()
 	{
 		iPlayer = iPlayers[i]
 		
-		if(!g_bBlocked[iPlayer])
+		if(!g_bBlocked[iPlayer]){
+			client_cmd(0, "mp3volume %f", 0.5)
 			client_cmd(iPlayer, "%s %s", iType == TYPE_WAV ? "spk" : "mp3 play", szSound)
+		}
 	}
 	
 	if(!blRandom)
