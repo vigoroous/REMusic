@@ -32,6 +32,10 @@ enum
 	VAULT_WRITE
 }
 
+#define NAME_LEN 32
+
+new user_name[NAME_LEN];
+
 public plugin_init()
 {
 	register_plugin("Round End Music", PLUGIN_VERSION, "OciXCrom")
@@ -56,11 +60,20 @@ public plugin_precache()
 public plugin_end()
 	ArrayDestroy(g_aSounds)
 
-public client_putinserver(id)
-{
-	client_cmd(id, "mp3volume %f", 0.4)
+public client_putinserver(id) {
 	g_bBlocked[id] = false
 	UseVault(id, VAULT_READ)
+}
+
+public client_connect (id) {
+	query_client_cvar(id, "volume", "cvar_query_callback")
+}
+
+public cvar_query_callback(id, const cvar[], const value[])
+{
+	get_user_name(id, user_name, charsmax(user_name))
+	log_amx("User: '%s', cvar: '%s', value: '%s'", user_name, cvar, value)
+	client_cmd(id, "mp3volume %f", floatstr(value) + 0.2)
 }
 
 public client_disconnect(id)
