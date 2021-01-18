@@ -58,6 +58,7 @@ public plugin_end()
 
 public client_putinserver(id)
 {
+	client_cmd(id, "mp3volume %f", 0.4)
 	g_bBlocked[id] = false
 	UseVault(id, VAULT_READ)
 }
@@ -101,7 +102,6 @@ public OnRoundEnd()
 		iPlayer = iPlayers[i]
 		
 		if(!g_bBlocked[iPlayer]){
-			client_cmd(0, "mp3volume %f", 0.15)
 			client_cmd(iPlayer, "%s %s", iType == TYPE_WAV ? "spk" : "mp3 play", szSound)
 		}
 	}
